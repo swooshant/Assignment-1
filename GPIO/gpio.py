@@ -23,7 +23,7 @@ def waitingForClient( status ):
 	elif status == "off":
 		GPIO.output(16,  False) 
 	else:
-		print("Invalid Argument")
+		print("Invalid Argument: waitingForClient")
 		return
 	return
 
@@ -38,7 +38,7 @@ def recieveFromClient( status ):
 		GPIO.output(16,  GPIO.LOW) 
 		GPIO.output(20, GPIO.LOW)
 	else:
-		print("Invalid Argument")
+		print("Invalid Argument: recieveFromClient")
 		return
 	return
 
@@ -52,7 +52,7 @@ def wolfSend( status ):
 		GPIO.output(21,  GPIO.LOW) 
 		GPIO.output(20, GPIO.LOW)
 	else:
-		print("Invalid Argument")
+		print("Invalid Argument: wolfSend")
 		return
 	return
 
@@ -66,7 +66,7 @@ def wolfRecieve( status ):
 		GPIO.output(16,  GPIO.LOW) 
 		GPIO.output(21, GPIO.LOW)
 	else:
-		print("Invalid Argument")
+		print("Invalid Argument: wolfRecieve")
 		return
 	return
 
@@ -82,7 +82,7 @@ def sendToClient( status ):
 		GPIO.output(21, GPIO.LOW)
 		GPIO.output(20, GPIO.LOW)
 	else:
-		print("Invalid Argument")
+		print("Invalid Argument: sendToClient")
 		return
 	return
 
