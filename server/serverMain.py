@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-import servSocket
 import pickle
 import hashlib
 import sys
@@ -7,20 +6,42 @@ import wolfram
 
 from cryptography.fernet import Fernet
 
-server_payload = servSocket.createServSocket()
-myData = pickle.loads(server_payload)
+host = ""
+port = 12397 # Reserve a port for your service
+backlog = 5
+size = 1024
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind((host, port)) #Bind to the port
+print('bind')
+s.listen(backlog) #Wait for the client connection
+while True:
+	print ("in server socket")
+	client, addr = s.accept() #Establish a connection with the client
+	print ('Got connection from',addr)
+	data = client.recv(size)
+	if data:
+		server_payload = data
+		myData = pickle.loads(server_payload)
+		key, ciphertext, md5, servAddr = myData
 
-print(myData)
-key, ciphertext, md5, servAddr = myData
+		if md5 != hashlib.md5(ciphertext).hexdigest():
+		    sys.exit(1)
 
-if md5 != hashlib.md5(ciphertext).hexdigest():
-    print("MD5 checksum does not match calculated checksum")
-    sys.exit(1)
+		f = Fernet(key)
+		question = f.decrypt(ciphertext)
 
-f = Fernet(key)
-question = f.decrypt(ciphertext)
+		app_id = "T72KQ9-LE373U33UW"
+		result = wolfram.askWolfram(app_id, question)
 
-app_id = "T72KQ9-LE373U33UW"
-result = wolfram.askWolfram(app_id, question)
+		ciphertext = f.encrypt(str.encode(result))
+		checksum = hashlib.md5(ciphertext).hexdigest()
 
-print(result)
+		# build the payload tuple
+		payload = (cyphertext, checksum)
+		# pickle up the payload
+		pickle_payload = pickle.dumps(payload)
+
+		client.send(pickle_payload)
+		client.close()
+
+

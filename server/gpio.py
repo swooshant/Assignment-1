@@ -9,6 +9,7 @@ def initGPIO():
 	GPIO.setup(20, GPIO.OUT)
 	GPIO.setup(21, GPIO.OUT)
 	GPIO.setwarnings(False)
+	cleanup()
 	return
 
 def cleanup():
