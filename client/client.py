@@ -49,9 +49,9 @@ def main(opt_args):
     
     print(plainTextByte)
 
-    answer = str.decode(plainTextByte)
+#    answer = str.decode(plainTextByte)
 
-    print(answer)
+#    print(answer)
 
 if __name__ == "__main__":
     parser = ArgumentParser(description='Parse options for the Otexta')
