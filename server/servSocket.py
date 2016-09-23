@@ -17,4 +17,5 @@ def createServSocket():
 		print ('Got connection from',addr)
 		data = client.recv(size)
 		if data:
-			return data
+                    s.close()
+                    return data

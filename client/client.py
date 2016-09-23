@@ -18,6 +18,7 @@ def main(opt_args):
     key = Fernet.generate_key()
     f = Fernet(key)
     ciphertext = f.encrypt(str.encode(question))
+    print(type(ciphertext))
     checksum = hashlib.md5(ciphertext).hexdigest()
 
     # build the payload tuple
@@ -46,8 +47,6 @@ def main(opt_args):
     #decrypt response
     answer = str.decode(f.decrypt(response_ciphertext))
     print(answer)
-
-
 
 if __name__ == "__main__":
     parser = ArgumentParser(description='Parse options for the Otexta')
