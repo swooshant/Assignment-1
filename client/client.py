@@ -45,7 +45,12 @@ def main(opt_args):
         sys.exit(1)
 
     #decrypt response
-    answer = str.decode(f.decrypt(response_ciphertext))
+    plainTextByte = f.decrypt(response_ciphertext)
+    
+    print(plainTextByte)
+
+    answer = str.decode(plainTextByte)
+
     print(answer)
 
 if __name__ == "__main__":
