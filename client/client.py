@@ -30,11 +30,24 @@ def main(opt_args):
     s.connect((host,port))
     s.send(pickle_payload)
 
-    # recieve the response
+    # recieve the response and close the socket
     data = s.recv(size)
-    # close the socket
     s.close()
-    print ('Received:', data)
+
+    response_payload = pickle.loads(data)
+    response_ciphertext = response_payload[0]
+    response_md5 = response_payload[1]
+
+    # verify checksum    
+    if response_md5 != hashlib.md5(response_ciphertext).hexdigest():
+        print("MD5 checksum does not match calculated checksum")
+        sys.exit(1)
+
+    #decrypt response
+    answer = str.decode(f.decrypt(response_ciphertext))
+    print(answer)
+
+
 
 if __name__ == "__main__":
     parser = ArgumentParser(description='Parse options for the Otexta')
