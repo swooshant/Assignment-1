@@ -1,23 +1,25 @@
 #!/usr/bin/python3
+import hashlib
+import pickle
 import socket
 import sys
 
 from argparse import ArgumentParser
+from cryptography.fernet import Fernet
 
 def main(opt_args):
-    self.question = opt_args.question
-    self.host = opt_args.host
+    question = opt_args.question
+    host = opt_args.host
+    port = 12397
 
-def createSocket():
-    print ("in Client")
-    s = socket.socket() #create a socket object
-    host = '172.30.47.95' #Host i.p
-    port = 12397 #Reserve a port for your service
+    key = Fernet.generate_key()
+    f = Fernet(key)
+    ciphertext = f.encrypt(str.encode(question))
+    checksum = hashlib.md5(ciphertext).hexdigest()
 
-    s.connect((host,port))
-    print (s.recv(1024))
-    s.close
-
+    payload = (key, ciphertext, checksum, host)
+    
+    pickle_payload = pickle.dumps(payload)
 
 if __name__ == "__main__":
     parser = ArgumentParser(description='Parse options for the Otexta')
