@@ -17,7 +17,6 @@ s.bind((host, port)) #Bind to the port
 s.listen(backlog) #Wait for the client connection
 gpio.initGPIO()
 while True:
-	print ("Waiting For Connection")
 	try:
 		gpio.waitingForClient("on")
 		client, addr = s.accept() #Establish a connection with the client
@@ -26,7 +25,7 @@ while True:
 		s.close()
 		sys.exit()
 	
-	print ('Got connection from',addr)
+	print ('Got connection from', addr)
 	data = client.recv(size)
 
 	gpio.waitingForClient("off")

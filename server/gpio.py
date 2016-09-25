@@ -19,6 +19,7 @@ def waitingForClient( status ):
 	#Red
 	if status == "on":
 		GPIO.output(16, True)
+		print("Server waiting for question payload")
 		time.sleep(3)
 	elif status == "off":
 		GPIO.output(16,  False) 
@@ -33,6 +34,7 @@ def recieveFromClient( status ):
 	if status == "on":
 		GPIO.output(16, GPIO.HIGH)
 		GPIO.output(20, GPIO.HIGH)
+		print("Recieving Question Payload")
 		time.sleep(3)
 	elif status == "off":
 		GPIO.output(16,  GPIO.LOW) 
@@ -47,6 +49,7 @@ def wolfSend( status ):
 	if status == "on":
 		GPIO.output(21, GPIO.HIGH)
 		GPIO.output(20, GPIO.HIGH)
+		print("Sending question to Wolfram")
 		time.sleep(3)
 	elif status == "off":
 		GPIO.output(21,  GPIO.LOW) 
@@ -61,6 +64,7 @@ def wolfRecieve( status ):
 	if status == "on":
 		GPIO.output(16, GPIO.HIGH)
 		GPIO.output(21, GPIO.HIGH)
+		print("Recieved answer from Wolfram, constructing return payload")
 		time.sleep(3)
 	elif status == "off":
 		GPIO.output(16,  GPIO.LOW) 
@@ -76,6 +80,7 @@ def sendToClient( status ):
 		GPIO.output(16, GPIO.HIGH)
 		GPIO.output(21, GPIO.HIGH)
 		GPIO.output(20, GPIO.HIGH)
+		print("Sending answer payload to client")
 		time.sleep(3)
 	elif status == "off":
 		GPIO.output(16,  GPIO.LOW) 
